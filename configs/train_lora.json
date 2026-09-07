@@ -1,0 +1,51 @@
+{
+  "model": {
+    "model_name": "llava-hf/llava-1.5-7b-hf",
+    "device": "auto",
+    "dtype": "float16",
+    "max_new_tokens": 256,
+    "use_dummy": false,
+    "vision_encoder": "openai/clip-vit-large-patch14-336",
+    "image_size": 336
+  },
+  "data": {
+    "data_root": "datasets_raw",
+    "processed_root": "datasets_processed",
+    "image_size": 336,
+    "train_split": "train",
+    "val_split": "val",
+    "test_split": "test"
+  },
+  "eval": {
+    "output_dir": "outputs",
+    "run_name": "train_eval_checkpoint",
+    "batch_size": 2,
+    "num_workers": 2
+  },
+  "training": {
+    "lora_rank": 32,
+    "lora_alpha": 64,
+    "lora_dropout": 0.05,
+    "lora_target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "learning_rate": 0.0002,
+    "num_epochs": 3,
+    "batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "warmup_ratio": 0.03,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "output_dir": "checkpoints/isro_lora_finetuned",
+    "logging_steps": 10,
+    "save_steps": 100,
+    "eval_steps": 50,
+    "seed": 42,
+    "fp16": true,
+    "use_wandb": false,
+    "wandb_project": "isro-vlm"
+  }
+}

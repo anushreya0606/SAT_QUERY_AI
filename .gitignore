@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Project-specific
+datasets_raw/
+datasets_processed/
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Large files
+*.tif
+*.tiff
+*.hdf5
+*.h5
+*.nc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+wandb/

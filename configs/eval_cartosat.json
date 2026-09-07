@@ -1,0 +1,60 @@
+{
+  "model": {
+    "model_name": "llava-hf/llava-1.5-7b-hf",
+    "device": "auto",
+    "dtype": "float16",
+    "max_new_tokens": 256,
+    "use_dummy": false,
+    "vision_encoder": "openai/clip-vit-large-patch14-336",
+    "image_size": 336
+  },
+  "data": {
+    "data_root": "datasets_raw",
+    "processed_root": "datasets_processed",
+    "image_size": 336,
+    "cartosat_dir": "cartosat",
+    "train_split": "train",
+    "val_split": "val",
+    "test_split": "test"
+  },
+  "eval": {
+    "output_dir": "outputs",
+    "run_name": "eval_cartosat_pan",
+    "batch_size": 1,
+    "num_workers": 2,
+    "datasets": [
+      "cartosat"
+    ],
+    "task_types": [
+      "captioning",
+      "vqa",
+      "grounding"
+    ],
+    "save_predictions": true,
+    "resume_from": null
+  },
+  "training": {
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "lora_target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "learning_rate": 0.0001,
+    "num_epochs": 5,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 8,
+    "warmup_ratio": 0.05,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "output_dir": "checkpoints/cartosat",
+    "logging_steps": 10,
+    "save_steps": 200,
+    "eval_steps": 100,
+    "seed": 42,
+    "fp16": true,
+    "use_wandb": false,
+    "wandb_project": "isro-vlm"
+  }
+}
