@@ -27,6 +27,14 @@ datasets_raw/
 datasets_processed/
 outputs/
 checkpoints/
+data/rsvqa/
+data/vrsbench/
+data/cdvqa/
+data/bigearthnet/
+data/bhoonidhi/
+traces/
+*results*.json
+*accuracy*.json
 *.pt
 *.pth
 *.bin
