@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S — God's Eye Protocol</title>
+    <meta name="description" content="Cinematic satellite surveillance interface with 3D globe, live intelligence overlays, and voice-activated search. Inspired by God's Eye View.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- ═══════ BOOT SCREEN ═══════ -->
+    <div id="boot-screen">
+        <div class="boot-grid"></div>
+        <div class="boot-content">
+            <div class="boot-logo">J.A.R.V.I.S</div>
+            <div class="boot-subtitle">God's Eye Protocol · No Place Left Behind</div>
+            <div class="boot-text" id="boot-text">INITIALIZING CORE SYSTEMS...</div>
+            <div class="boot-progress"><div class="boot-progress-bar" id="boot-progress"></div></div>
+            <div class="boot-version">BUILD 2026.09 · SPATIAL INTELLIGENCE UNIT</div>
+        </div>
+    </div>
+
+    <!-- ═══════ 3D SCENE ═══════ -->
+    <div id="scene-container"></div>
+
+    <!-- ═══════ SURVEILLANCE BACKGROUND ═══════ -->
+    <div id="bg-image"></div>
+
+    <!-- ═══════ SCOPE MASK (circular vignette) ═══════ -->
+    <div id="scope-mask"></div>
+
+    <!-- ═══════ HUD GRID ═══════ -->
+    <div id="hud-grid"></div>
+
+    <!-- ═══════ POST-FX OVERLAY (CRT/NVG/FLIR) ═══════ -->
+    <div id="postfx-overlay"></div>
+
+    <!-- ═══════ INTEL HUD OVERLAY (Military readouts) ═══════ -->
+    <div id="intel-hud">
+        <div class="intel-corner intel-top-left">
+            <div class="intel-bracket">┌</div>
+            <div class="intel-classification">TOP SECRET // SI-TK // NOFORN</div>
+            <div class="intel-system" id="intel-mission">KH11-4217 OPS-4150</div>
+            <div class="intel-mode" id="intel-mode">NORMAL</div>
+        </div>
+        <div class="intel-corner intel-top-right">
+            <div class="intel-rec"><span class="intel-rec-dot">●</span> REC <span class="intel-timestamp" id="intel-timestamp">2026-01-01 00:00:00Z</span></div>
+            <div class="intel-orbital" id="intel-orbital">ORB: 47521 PASS: DESC-217</div>
+            <div class="intel-bracket" style="text-align:right">┐</div>
+        </div>
+        <div class="intel-corner intel-bottom-left">
+            <div class="intel-bracket">└</div>
+            <div id="intel-mgrs">MGRS: ---</div>
+            <div id="intel-latlon">--°--'--"N ---°--'--"W</div>
+        </div>
+        <div class="intel-corner intel-bottom-right">
+            <div id="intel-gsd">GSD: --m NIIRS: --</div>
+            <div id="intel-alt">ALT: --m SUN: --° EL</div>
+            <div class="intel-bracket" style="text-align:right">┘</div>
+        </div>
+        <div class="intel-edge intel-left-edge">JARVIS SURVEILLANCE FEED — LIVE TELEMETRY</div>
+        <div class="intel-edge intel-right-edge">SPATIAL INTELLIGENCE · GOD'S EYE PROTOCOL</div>
+        <div class="intel-summary-bar" id="intel-summary">AWAITING TELEMETRY...</div>
+    </div>
+
+    <!-- ═══════ SCAN OVERLAY ═══════ -->
+    <div id="scan-overlay"><div class="scan-line"></div><div class="scan-flash"></div></div>
+
+    <!-- ═══════ CORNER BRACKETS ═══════ -->
+    <div class="corner-bracket top-left"></div>
+    <div class="corner-bracket top-right"></div>
+    <div class="corner-bracket bottom-left"></div>
+    <div class="corner-bracket bottom-right"></div>
+
+    <!-- ═══════ MAIN HUD ═══════ -->
+    <div id="hud">
+        <!-- HEADER -->
+        <header id="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-diamond">◆</span>
+                    <span class="logo-text">GOD'S EYE</span>
+                </div>
+                <span class="logo-subtitle">NO PLACE LEFT BEHIND</span>
+            </div>
+
+            <div class="header-center">
+                <div id="search-container">
+                    <div class="search-wrapper">
+                        <span class="search-icon material-symbols-outlined">search</span>
+                        <input type="text" id="search-input" placeholder="Search any location..." autocomplete="off">
+                        <button id="voice-btn" title="Voice search"><span class="material-symbols-outlined" style="font-size:16px">mic</span></button>
+                        <button id="search-btn"><span class="btn-icon material-symbols-outlined">radar</span> SCAN</button>
+                    </div>
+                    <div id="suggestions"></div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="system-status">
+                    <div class="status-indicator">
+                        <span id="system-status-text">SYSTEM ONLINE</span>
+                        <span class="status-dot"></span>
+                    </div>
+                    <div class="datetime" id="datetime">--</div>
+                    <div class="uplink-status"><span class="uplink-dot"></span> UPLINK ACTIVE</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- SENSOR MODE BAR -->
+        <div id="sensor-bar">
+            <button class="sensor-btn active" data-mode="normal" title="Normal View">NRM</button>
+            <button class="sensor-btn" data-mode="crt" title="CRT Retro">CRT</button>
+            <button class="sensor-btn" data-mode="nvg" title="Night Vision">NVG</button>
+            <button class="sensor-btn" data-mode="flir" title="Thermal FLIR">FLR</button>
+        </div>
+
+        <!-- LEFT PANEL -->
+        <div id="left-panel">
+            <div class="data-card">
+                <div class="card-header"><span class="card-icon material-symbols-outlined">radar</span> RADAR SWEEP</div>
+                <div class="card-body">
+                    <div class="radar-container">
+                        <div class="radar">
+                            <div class="radar-sweep"></div>
+                            <div class="radar-ring ring-1"></div>
+                            <div class="radar-ring ring-2"></div>
+                            <div class="radar-ring ring-3"></div>
+                            <div class="radar-crosshair-h"></div>
+                            <div class="radar-crosshair-v"></div>
+                            <div class="radar-dot dot-1"></div>
+                            <div class="radar-dot dot-2"></div>
+                            <div class="radar-dot dot-3"></div>
+                            <div class="radar-dot dot-4"></div>
+                            <div class="radar-dot dot-5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="data-card">
+                <div class="card-header"><span class="card-icon material-symbols-outlined">satellite_alt</span> COORDINATES</div>
+                <div class="card-body">
+                    <div class="data-row"><span class="data-label">LAT</span><span class="data-value" id="data-lat">--</span></div>
+                    <div class="data-row"><span class="data-label">LON</span><span class="data-value" id="data-lon">--</span></div>
+                    <div class="data-row"><span class="data-label">ALT</span><span class="data-value" id="data-alt">--</span></div>
+                    <div class="data-row"><span class="data-label">POPULATION</span><span class="data-value" id="data-pop">--</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div id="right-panel">
+            <div class="data-card">
+                <div class="card-header">
+                    <span class="card-icon material-symbols-outlined">cloud</span> WEATHER INTEL
+                    <button class="fav-btn" id="fav-btn" title="Add to favorites">☆</button>
+                </div>
+                <div class="card-body">
+                    <div class="weather-main">
+                        <span class="weather-temp" id="weather-temp">--°</span>
+                        <span class="weather-desc" id="weather-desc">--</span>
+                    </div>
+                    <div class="data-row"><span class="data-label">WIND</span><span class="data-value" id="weather-wind">--</span></div>
+                    <div class="data-row"><span class="data-label">HUMIDITY</span><span class="data-value" id="weather-humidity">--</span></div>
+                    <div class="data-row"><span class="data-label">VISIBILITY</span><span class="data-value" id="weather-vis">--</span></div>
+                </div>
+            </div>
+            <div class="data-card">
+                <div class="card-header"><span class="card-icon material-symbols-outlined">info</span> PLACE INTEL</div>
+                <div class="card-body">
+                    <div class="place-image-container" id="place-image-container">
+                        <img id="place-image" alt="Place">
+                    </div>
+                    <div class="place-name" id="place-name">NO TARGET</div>
+                    <div class="place-description" id="place-description">Search for a location to acquire intel...</div>
+                </div>
+            </div>
+            <div class="data-card">
+                <div class="card-header"><span class="card-icon material-symbols-outlined">location_on</span> NEARBY LANDMARKS</div>
+                <div class="card-body" id="attractions-list">
+                    <div class="attraction-placeholder">No landmarks detected</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM PANEL — FAVORITES -->
+        <div id="bottom-panel">
+            <div class="panel-header-bar">
+                <span class="material-symbols-outlined" style="font-size:14px;color:rgba(255,215,0,0.4)">star</span>
+                SAVED TARGETS
+                <span class="fav-count" id="fav-count">0</span>
+            </div>
+            <div id="favorites-container">
+                <div class="no-favorites">No saved targets — search a location and click ☆</div>
+            </div>
+        </div>
+
+        <!-- SATELLITE STATUS BAR -->
+        <div id="sat-status-bar">
+            <div class="sat-item"><span class="sat-dot active"></span> SAT-01 TITAN</div>
+            <div class="sat-divider"></div>
+            <div class="sat-item"><span class="sat-dot active"></span> SAT-02 ORION</div>
+            <div class="sat-divider"></div>
+            <div class="sat-item"><span class="sat-dot active"></span> SAT-03 VEGA</div>
+            <div class="sat-divider"></div>
+            <div class="sat-item"><span class="sat-dot warning"></span> SAT-04 LYRA</div>
+            <div class="sat-divider"></div>
+            <div class="sat-item"><span class="sat-dot active"></span> SAT-05 NOVA</div>
+            <div class="sat-divider"></div>
+            <div class="signal-strength sat-item">
+                UPLINK SIGNAL
+                <div class="signal-bars"><div class="bar b1"></div><div class="bar b2"></div><div class="bar b3"></div><div class="bar b4"></div><div class="bar b5"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ TARGETING RETICLE ═══════ -->
+    <div id="targeting-reticle" class="hidden">
+        <div class="reticle-outer">
+            <div class="reticle-outer"></div>
+        </div>
+        <div class="reticle-inner"></div>
+        <div class="reticle-cross-h"></div>
+        <div class="reticle-cross-v"></div>
+        <div class="reticle-corner tl"></div>
+        <div class="reticle-corner tr"></div>
+        <div class="reticle-corner bl"></div>
+        <div class="reticle-corner br"></div>
+        <div class="reticle-label" id="reticle-label">ACQUIRING...</div>
+    </div>
+
+    <!-- ═══════ VOICE FEEDBACK ═══════ -->
+    <div id="voice-feedback" class="hidden">
+        <div class="voice-rings">
+            <div class="voice-ring r1"></div>
+            <div class="voice-ring r2"></div>
+            <div class="voice-ring r3"></div>
+        </div>
+        <div class="voice-text">LISTENING...</div>
+    </div>
+
+    <!-- ═══════ SATELLITE HOVER TELEMETRY TOOLTIP ═══════ -->
+    <div id="sat-tooltip" class="sat-tooltip hidden">
+        <div class="sat-tt-header">
+            <span class="sat-tt-dot">●</span>
+            <span class="sat-tt-name" id="sat-tt-name">SAT-01 TITAN</span>
+            <span class="sat-tt-type" id="sat-tt-type">KH-11 OPTICAL</span>
+        </div>
+        <div class="sat-tt-body">
+            <div class="sat-tt-row"><span>ALTITUDE</span><span id="sat-tt-alt">542 KM</span></div>
+            <div class="sat-tt-row"><span>VELOCITY</span><span id="sat-tt-vel">7.64 KM/S</span></div>
+            <div class="sat-tt-row"><span>INCLINATION</span><span id="sat-tt-inc">97.4° SSO</span></div>
+            <div class="sat-tt-row"><span>DOWNLINK</span><span id="sat-tt-status" class="status-locked">LOCKED 99.8%</span></div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
