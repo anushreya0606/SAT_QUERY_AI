@@ -1,4 +1,4 @@
-﻿# SatQuery AI: Drishti Spatial Intelligence (SIH 2026 - PS 26167)
+# SatQuery AI: Drishti Spatial Intelligence (SIH 2026 - PS 26167)
 
 **Problem Statement:** 26167 (ISRO/SAC)
 **Title:** SatQuery AI: An Interactive Vision-Language Assistant for Multimodal Remote Sensing Image Analysis through Text Queries
@@ -12,7 +12,7 @@
 
 Our solution democratizes satellite intelligence, allowing non-experts, disaster response teams, and policymakers to query multi-spectral and SAR satellite constellations entirely through natural text and voice commands.
 
-![Drishti Spatial AI Interface](https://raw.githubusercontent.com/khushi-sharma2506/SatQuery_Al/main/jarvis-god-eye/assets/preview.png) *(Preview of the cinematic God-Eye UI)*
+![Drishti Spatial AI Interface](https://raw.githubusercontent.com/anushreya0606/SAT_QUERY_AI/main/jarvis-god-eye/assets/preview.png) *(Preview of the cinematic God-Eye UI)*
 
 ---
 
