@@ -47,24 +47,24 @@ graph TD
     classDef secondary fill:#34495E,stroke:#2ECC71,stroke-width:2px,color:#fff
     classDef external fill:#7F8C8D,stroke:#BDC3C7,stroke-width:2px,color:#fff
     
-    User((🧑‍💻 User)):::primary
+    User(("🧑‍💻 User")):::primary
     
     subgraph "Frontend (Drishti Spatial AI - Three.js)"
-        UI[🖥️ Cinematic 3D God-Eye Globe]:::secondary
-        Voice[🎤 Web Speech API]:::secondary
-        Chat[💬 Text Sandbox & Parser]:::secondary
+        UI["🖥️ Cinematic 3D God-Eye Globe"]:::secondary
+        Voice["🎤 Web Speech API"]:::secondary
+        Chat["💬 Text Sandbox & Parser"]:::secondary
     end
     
     subgraph "Backend (FastAPI Agentic Pipeline)"
-        API[⚡ FastAPI Router]:::primary
-        Agent[🧠 Agentic Reasoning Engine]:::primary
-        VLM[🛰️ Vision-Language Model]:::primary
-        Audit[📜 JSON Execution Trace]:::primary
+        API["⚡ FastAPI Router"]:::primary
+        Agent["🧠 Agentic Reasoning Engine"]:::primary
+        VLM["🛰️ Vision-Language Model"]:::primary
+        Audit["📜 JSON Execution Trace"]:::primary
     end
     
     subgraph "External/Data Sources"
-        GeoAPI[🌍 Nominatim Geocoding API]:::external
-        SatData[📡 Cartosat (Optical) & RISAT (SAR)]:::external
+        GeoAPI["🌍 Nominatim Geocoding API"]:::external
+        SatData["📡 Cartosat (Optical) & RISAT (SAR)"]:::external
     end
     
     User -->|Voice/Text| Voice
