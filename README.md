@@ -34,12 +34,54 @@ Our solution democratizes satellite intelligence, allowing non-experts, disaster
 - **Change Detection:** Built-in multimodal reasoning pipelines to detect urban encroachment, deforestation, and natural disasters.
 
 ### 4. ISRO Execution Trace Audit
-- **Strict JSON Tracing:** A live "EXECUTION TRACE" panel renders real-time JSON logs showing step_id, module, and ction.
+- **Strict JSON Tracing:** A live "EXECUTION TRACE" panel renders real-time JSON logs showing step_id, module, and  ction.
 - **Transparency:** Demonstrates exactly how the VLM and schema validators are reasoning through spatial data, fulfilling ISRO's requirement for reproducible auditing.
 
 ---
 
-## 🛠️ Architecture
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    classDef primary fill:#2C3E50,stroke:#3498DB,stroke-width:2px,color:#fff
+    classDef secondary fill:#34495E,stroke:#2ECC71,stroke-width:2px,color:#fff
+    classDef external fill:#7F8C8D,stroke:#BDC3C7,stroke-width:2px,color:#fff
+    
+    User((🧑‍💻 User)):::primary
+    
+    subgraph "Frontend (Drishti Spatial AI - Three.js)"
+        UI[🖥️ Cinematic 3D God-Eye Globe]:::secondary
+        Voice[🎤 Web Speech API]:::secondary
+        Chat[💬 Text Sandbox & Parser]:::secondary
+    end
+    
+    subgraph "Backend (FastAPI Agentic Pipeline)"
+        API[⚡ FastAPI Router]:::primary
+        Agent[🧠 Agentic Reasoning Engine]:::primary
+        VLM[🛰️ Vision-Language Model]:::primary
+        Audit[📜 JSON Execution Trace]:::primary
+    end
+    
+    subgraph "External/Data Sources"
+        GeoAPI[🌍 Nominatim Geocoding API]:::external
+        SatData[📡 Cartosat (Optical) & RISAT (SAR)]:::external
+    end
+    
+    User -->|Voice/Text| Voice
+    User -->|Types Query| Chat
+    Voice --> Chat
+    Chat -->|Updates View| UI
+    Chat -->|Fetch Coordinates| GeoAPI
+    Chat -->|Complex Spatial Queries| API
+    
+    API --> Agent
+    Agent <--> VLM
+    VLM <--> SatData
+    Agent --> Audit
+    
+    Audit -->|Execution Steps| API
+    API -->|Results & Bi-Temporal Images| Chat
+```
 
 ### Frontend (/jarvis-god-eye)
 - **HTML5/CSS3:** Custom HUD with JetBrains Mono and Orbitron fonts.
