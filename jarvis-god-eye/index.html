@@ -121,7 +121,7 @@
         </header>
 
         <!-- SENSOR MODE BAR -->
-        <div id="sensor-bar">
+        <div id="sensor-bar" style="display:none;">
             <button class="sensor-btn active" data-mode="normal" title="Normal View">NRM</button>
             <button class="sensor-btn" data-mode="crt" title="CRT Retro">CRT</button>
             <button class="sensor-btn" data-mode="nvg" title="Night Vision">NVG</button>
@@ -196,6 +196,7 @@
                 <div id="chat-history" style="flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:10px; min-height:100px;">
                 </div>
                 <div style="display:flex; padding:8px; border-top:1px solid rgba(0,240,255,0.2); gap:8px;">
+                    <button id="upload-data-btn" title="Upload Satellite Data" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">attach_file</span></button>
                     <button id="chat-voice-btn" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">mic</span></button>
                     <input type="text" id="chat-input" placeholder="Ask Drishti..." autocomplete="off" style="flex:1; background:transparent; border:1px solid rgba(0,240,255,0.3); color:#00f0ff; padding:6px 10px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">
                     <button id="chat-send-btn" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">send</span></button>
@@ -281,6 +282,6 @@
         <button id="close-popup" style="display:block; margin:0 15px 15px 15px; padding:8px; width:calc(100% - 30px); background:rgba(0,240,255,0.1); border:1px solid #00f0ff; color:#00f0ff; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12px;">DISMISS</button>
     </div>
 
-    <script type="module" src="app.js?v=8"></script>
+    <script type="module" src="app.js?v=9"></script>
 </body>
 </html>
