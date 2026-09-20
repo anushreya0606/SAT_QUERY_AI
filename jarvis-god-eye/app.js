@@ -2073,4 +2073,39 @@ const JarvisGodEye = SatQueryAI;
 document.addEventListener('DOMContentLoaded', () => {
     window.astraApp = new SatQueryAI();
     window.jarvisApp = window.astraApp;
+    // --- SIH PROTOTYPE MANDATORY BUTTONS ---
+    const uplBtn = document.getElementById('upload-data-btn');
+    const fileInput = document.getElementById('dataset-upload');
+    if (uplBtn && fileInput) {
+        uplBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                window.astraApp.appendChatMsg("Loaded " + e.target.files.length + " local GeoTIFF dataset(s) into memory for processing.");
+                window.astraApp.setSystemStatus("DATASET MOUNTED");
+            }
+        });
+    }
+
+    const reportBtn = document.getElementById('download-report-btn');
+    if (reportBtn) {
+        reportBtn.addEventListener('click', () => {
+            const traceEl = document.getElementById('execution-trace-log');
+            let text = "ANTARIKSH ASTRA // DRISHTI SPATIAL AI - AUDIT REPORT\n\n";
+            text += "TARGET: " + (window.astraApp.currentLocation ? window.astraApp.currentLocation.displayName : "N/A") + "\n";
+            text += "TIMESTAMP: " + new Date().toISOString() + "\n\n";
+            text += "--- AGENTIC EXECUTION TRACE ---\n";
+            text += (traceEl ? traceEl.innerText : "No trace logs available.") + "\n";
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'Antariksh_Astra_Audit.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    }
+
 });
