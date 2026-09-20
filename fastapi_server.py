@@ -16,19 +16,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-import google.generativeai as genai
 import os
+import uuid
+from datetime import datetime
+from schema.trace import ExecutionTraceStep
 
-# ==========================================
-# INSERT YOUR GEMINI API KEY HERE
-# ==========================================
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY_HERE")
-
-if GEMINI_API_KEY != "YOUR_GEMINI_API_KEY_HERE":
-    genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel('gemini-3.5-flash')
-else:
-    gemini_model = None
+# DOFA Mock setup (to replace the banned Cloud APIs)
+# We simulate a DOFA (Dynamic Wavelength) model fallback instead of using Gemini
+def generate_dofa_mock_trace(query: str, intent: str, confidence: float) -> dict:
+    step = ExecutionTraceStep(
+        step_id=f"DOFA_INFERENCE_{uuid.uuid4().hex[:6]}",
+        module="DOFA_VLM_ENCODER",
+        action="multimodal_reasoning",
+        inputs={"query": query, "sensor": "sensor-agnostic"},
+        outputs={"intent": intent, "confidence": confidence}
+    )
+    # Return as dict so FastAPI can serialize it easily
+    return step.model_dump()
 
 class QueryRequest(BaseModel):
     query: str
@@ -41,39 +45,36 @@ async def process_query(request: QueryRequest):
     await asyncio.sleep(1)
     
     if "deforestation" in query or "change" in query:
+        trace_data = generate_dofa_mock_trace(query, "change_detection", 0.94)
         return {
             "status": "success",
             "lat": 20.5937,
             "lng": 78.9629,
             "target_name": "DEFORESTATION FRONT, INDIA",
-            "trace": "EXECUTING TRACE: VLM_ENCODER -> CHANGE_DETECTION -> MASKING...",
+            "bbox": [20.5900, 78.9600, 20.5974, 78.9658],
+            "trace": trace_data,
             "result": "RESULT: 2.4 SQ KM FOREST LOSS DETECTED. CONFIDENCE: 0.94. TRACE LOGGED."
         }
     elif "sar" in query or "cartosat" in query or "fusion" in query or "construction" in query:
+        trace_data = generate_dofa_mock_trace(query, "sar_optical_fusion", 0.88)
         return {
             "status": "success",
             "lat": 28.6139,
             "lng": 77.2090,
             "target_name": "RISAT-CARTOSAT ALIGNMENT, NEW DELHI",
-            "trace": "EXECUTING TRACE: DOFA_SENSOR_ALIGNMENT -> SAR_OPTICAL_FUSION...",
+            "bbox": [28.6100, 77.2050, 28.6178, 77.2130],
+            "trace": trace_data,
             "result": "RESULT: UNAUTHORIZED CONSTRUCTION IDENTIFIED. CONFIDENCE: 0.88. TRACE LOGGED."
         }
     else:
-        # Dynamic Fallback using Real Gemini API!
+        # Dynamic Fallback using Local DOFA-VLM Mock (Replacing Gemini!)
         ai_response_text = f"RESULT: ANALYSIS COMPLETE FOR '{request.query.upper()}'. NO ANOMALIES."
-        
-        if gemini_model:
-            try:
-                prompt = f"You are Drishti Spatial AI, an advanced satellite intelligence assistant built for ISRO. Keep your answer brief, professional, and military-style (under 3 sentences). Answer this query: {request.query}"
-                response = gemini_model.generate_content(prompt)
-                ai_response_text = response.text.strip()
-            except Exception as e:
-                print(f"Gemini API Error: {e}")
+        trace_data = generate_dofa_mock_trace(query, "general_query", 0.75)
         
         return {
             "status": "success",
             "action": "geocode",
-            "trace": "EXECUTING TRACE: LLaVA_VLM_ENCODER -> NLP_ROUTING...",
+            "trace": trace_data,
             "result": ai_response_text
         }
 
