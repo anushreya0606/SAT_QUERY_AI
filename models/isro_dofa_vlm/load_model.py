@@ -15,11 +15,11 @@ from typing import Optional, Dict, Any
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
-BIPANSHU_PATH = os.path.join(REPO_ROOT, "bipanshu_work")
+BIPANSHU_PATH = os.path.join(REPO_ROOT, "dofa_core")
 if BIPANSHU_PATH not in sys.path:
     sys.path.insert(0, BIPANSHU_PATH)
 
-from bipanshu_work.models.dofa_vlm import DOFA_VLM
+from dofa_core.models.dofa_vlm import DOFA_VLM
 
 
 def load_pretrained_dofa_vlm(

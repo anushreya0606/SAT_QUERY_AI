@@ -25,7 +25,7 @@ except ImportError:
     try:
         from models.dofa_encoder import DOFAEncoder
     except ImportError:
-        from bipanshu_work.models.dofa_encoder import DOFAEncoder
+        from dofa_core.models.dofa_encoder import DOFAEncoder
 
 
 # Simple vocabulary for decoding from logits (used in untrained inference)
