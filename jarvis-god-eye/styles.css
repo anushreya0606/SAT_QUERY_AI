@@ -132,7 +132,7 @@ html, body {
     opacity: 0; transition: opacity 2s ease;
     pointer-events: none;
 }
-#bg-image.active { opacity: 0.6; filter: brightness(1.2); }
+#bg-image.active { opacity: 0.18; filter: brightness(1.0); }
 #bg-image::before {
     content: ''; position: absolute; inset: 0;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.012) 2px, rgba(0, 212, 255, 0.012) 4px);
