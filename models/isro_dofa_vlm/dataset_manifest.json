@@ -1,0 +1,68 @@
+{
+  "datasets": [
+    {
+      "name": "RSVQA-LR",
+      "sensor": "Sentinel-2 MSI / RGB",
+      "gsd_m": 10.0,
+      "wavelengths_um": [0.665, 0.560, 0.490],
+      "task": "Visual Question Answering (Binary / Presence / Comparison)",
+      "data_path": "data/rsvqa/LR"
+    },
+    {
+      "name": "RSVQA-HR",
+      "sensor": "Aerial Orthophoto",
+      "gsd_m": 0.15,
+      "wavelengths_um": [0.650, 0.540, 0.470],
+      "task": "High-Resolution Urban VQA (Building count, Rural/Urban analysis)",
+      "data_path": "data/rsvqa/HR"
+    },
+    {
+      "name": "VRSBench",
+      "sensor": "High-Res Optical Satellite",
+      "gsd_m": 0.5,
+      "wavelengths_um": [0.650, 0.540, 0.470],
+      "task": "Visual Reasoning, Captioning, Object Grounding",
+      "data_path": "data/vrsbench"
+    },
+    {
+      "name": "EuroSAT",
+      "sensor": "Sentinel-2 Multispectral 13-band / RGB",
+      "gsd_m": 10.0,
+      "wavelengths_um": [0.665, 0.560, 0.490],
+      "task": "Land Use / Land Cover Classification (10 Classes)",
+      "data_path": "data/eurosat"
+    },
+    {
+      "name": "GeoChat",
+      "sensor": "Multi-Sensor Remote Sensing",
+      "gsd_m": 0.5,
+      "wavelengths_um": [0.650, 0.540, 0.470],
+      "task": "Conversational Satellite VQA & Region Captioning",
+      "data_path": "data/geochat"
+    },
+    {
+      "name": "BigEarthNet",
+      "sensor": "Sentinel-2 (12 Bands) & Sentinel-1 (VV/VH SAR)",
+      "gsd_m": 10.0,
+      "wavelengths_um": [0.443, 0.490, 0.560, 0.665, 0.705, 0.740, 0.783, 0.842, 0.865, 0.945, 1.610, 2.190],
+      "task": "Multi-Label Corine Land Cover Classification (19 classes)",
+      "data_path": "data/bigearthnet"
+    },
+    {
+      "name": "Cartosat-2S (ISRO Bhoonidhi)",
+      "sensor": "5-Band Optical (PAN + 4 VNIR)",
+      "gsd_m": 0.65,
+      "wavelengths_um": [0.650, 0.485, 0.560, 0.660, 0.825],
+      "task": "Sub-Meter High-Resolution Feature Extraction & Infrastructure QA",
+      "data_path": "data/bhoonidhi"
+    },
+    {
+      "name": "RISAT-1/1A (ISRO Bhoonidhi)",
+      "sensor": "C-band Synthetic Aperture Radar (SAR)",
+      "gsd_m": 1.0,
+      "wavelengths_um": [55500.0, 55500.0],
+      "task": "All-Weather Radar Backscatter Analysis & Soil/Surface Permittivity",
+      "data_path": "data/bhoonidhi"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "model_type": "isro_dofa_vlm",
+  "model_version": "1.0.0",
+  "architecture": "DOFA_VLM",
+  "encoder": {
+    "type": "DOFAEncoder",
+    "embed_dim": 768,
+    "depth": 6,
+    "num_heads": 8,
+    "patch_size": 16,
+    "img_size": 256,
+    "dynamic_wavelength_embedding": true,
+    "dynamic_gsd_embedding": true,
+    "wavelength_embed_dim": 128
+  },
+  "projector": {
+    "type": "MultimodalLinearProjector",
+    "in_features": 768,
+    "out_features": 1024
+  },
+  "llm_head": {
+    "hidden_dim": 1024,
+    "vocab_size": 32000,
+    "max_gen_len": 32,
+    "classification_classes": 19,
+    "vqa_classes": 128
+  },
+  "sensor_specifications": {
+    "sentinel2_msi": {
+      "bands": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B11", "B12"],
+      "wavelengths_um": [0.443, 0.490, 0.560, 0.665, 0.705, 0.740, 0.783, 0.842, 0.865, 0.945, 1.610, 2.190],
+      "default_gsd_m": 10.0
+    },
+    "sentinel2_rgb": {
+      "bands": ["B04", "B03", "B02"],
+      "wavelengths_um": [0.665, 0.560, 0.490],
+      "default_gsd_m": 10.0
+    },
+    "sentinel1_sar": {
+      "bands": ["VV", "VH"],
+      "wavelengths_um": [55500.0, 55500.0],
+      "default_gsd_m": 10.0
+    },
+    "cartosat_optical": {
+      "bands": ["PAN", "B2_Blue", "B3_Green", "B4_Red", "B5_NIR"],
+      "wavelengths_um": [0.650, 0.485, 0.560, 0.660, 0.825],
+      "default_gsd_m": 0.65
+    },
+    "cartosat_rgb": {
+      "bands": ["B4_Red", "B3_Green", "B2_Blue"],
+      "wavelengths_um": [0.660, 0.560, 0.485],
+      "default_gsd_m": 0.65
+    },
+    "risat_sar": {
+      "bands": ["HH", "HV"],
+      "wavelengths_um": [55500.0, 55500.0],
+      "default_gsd_m": 1.0
+    },
+    "vrsbench_optical": {
+      "bands": ["Red", "Green", "Blue"],
+      "wavelengths_um": [0.650, 0.540, 0.470],
+      "default_gsd_m": 0.5
+    },
+    "eurosat_rgb": {
+      "bands": ["Red", "Green", "Blue"],
+      "wavelengths_um": [0.665, 0.560, 0.490],
+      "default_gsd_m": 10.0
+    },
+    "geochat_rgb": {
+      "bands": ["Red", "Green", "Blue"],
+      "wavelengths_um": [0.650, 0.540, 0.470],
+      "default_gsd_m": 0.5
+    }
+  },
+  "training_parameters": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "precision": "fp32"
+  }
+}
