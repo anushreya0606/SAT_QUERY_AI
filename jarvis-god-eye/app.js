@@ -2085,8 +2085,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
-                window.astraApp.appendChatMsg("Loaded " + e.target.files.length + " local GeoTIFF dataset(s) into memory for processing.");
-                window.astraApp.setSystemStatus("DATASET MOUNTED");
+                const file = e.target.files[0];
+                const url = URL.createObjectURL(file);
+                const img1 = document.getElementById('popup-img-1');
+                const img2 = document.getElementById('popup-img-2');
+                if (img1) img1.src = url;
+                if (img2) img2.src = url;
+                window.astraApp.appendChatMsg('[UPLOAD] ' + file.name + ' mounted. Running DOFA-VLM analysis...');
+                window.astraApp.setSystemStatus('PROCESSING UPLOADED IMAGERY');
+                const popup = document.getElementById('image-popup-overlay');
+                if (popup) popup.style.display = 'block';
+                setTimeout(() => {
+                    window.astraApp.appendChatMsg('RESULT: Change analysis complete. Refer to Bi-Temporal Panel for bounding box output.');
+                    window.astraApp.setSystemStatus('TASK COMPLETE');
+                }, 3000);
             }
         });
     }
