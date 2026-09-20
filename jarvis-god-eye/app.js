@@ -1264,23 +1264,27 @@ class SatQueryAI {
         
         if (demoQuery.includes("deforestation") || demoQuery.includes("change")) {
             if (this.dom.suggestions) this.dom.suggestions.classList.remove('visible');
-            this.setSystemStatus('ACTIVATING DRISHTI AGENTIC PIPELINE...');
+            this.setSystemStatus('ACTIVATING DOFA-VLM SPECTRAL ENGINE...');
             this.audio.playLock();
             
-            // Fly to India coordinates
-            this.selectLocation(20.5937, 78.9629, "DEFORESTATION FRONT, INDIA", true);
+            // Fly to Dehradun coordinates matching Bipanshu's Model
+            this.selectLocation(30.3165, 78.0322, "DEHRADUN DOON VALLEY, INDIA", true);
             
-            // Override the intel summary after a slight delay
+            // Override the intel summary with scientific trace
             setTimeout(() => {
-                this.typeIntelSummary("EXECUTING TRACE: VLM_ENCODER -> CHANGE_DETECTION -> MASKING...");
-                this.dom.system_status_text.textContent = 'ANALYZING BI-TEMPORAL PAIR';
+                this.typeIntelSummary("[2/4] SPECTRAL INGESTION: Sentinel-2 MSI NIR (0.842um) & Cartosat-2S...");
+                this.dom.system_status_text.textContent = 'CALCULATING NDVI INDICES';
             }, 1000);
             
             setTimeout(() => {
-                this.typeIntelSummary("RESULT: 2.4 KM² FOREST LOSS DETECTED. CONFIDENCE: 0.94. TRACE LOGGED.");
+                this.typeIntelSummary("[3/4] CANOPY HEALTH: Baseline NDVI 0.695 -> Current NDVI 0.454. LOSS: 21.97%");
+            }, 3500);
+
+            setTimeout(() => {
+                this.typeIntelSummary("[4/4] AI VERDICT: Active deforestation & forest canopy clearance detected. (~355.8 Acres)");
                 this.audio.playLock();
                 this.dom.system_status_text.textContent = 'TASK COMPLETE';
-            }, 5000);
+            }, 6000);
             
             return;
         }
