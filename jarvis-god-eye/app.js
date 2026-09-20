@@ -533,7 +533,7 @@ class SatQueryAI {
 
         // Default target: Paris
         setTimeout(() => {
-            this.selectLocation(48.8566, 2.3522, 'Paris, France', true);
+            this.selectLocation(28.6139, 77.2090, 'New Delhi, India', true);
         }, 800);
     }
 
