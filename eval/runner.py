@@ -3,7 +3,10 @@ import uuid
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from tqdm import tqdm
+try:
+    from tqdm import tqdm
+except ImportError:
+    tqdm = lambda x, **kw: x
 
 from schema.trace import ExecutionTrace, ExecutionTraceStep
 from eval.metrics import Evaluator

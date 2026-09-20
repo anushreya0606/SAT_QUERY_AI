@@ -23,6 +23,8 @@ env/
 .ipynb_checkpoints/
 
 # Project-specific
+.env
+.env.*
 datasets_raw/
 datasets_processed/
 outputs/
@@ -32,6 +34,10 @@ data/vrsbench/
 data/cdvqa/
 data/bigearthnet/
 data/bhoonidhi/
+data/eurosat/
+data/geochat/
+data_cloud/
+data_cloud
 traces/
 *results*.json
 *accuracy*.json

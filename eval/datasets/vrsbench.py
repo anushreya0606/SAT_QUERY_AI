@@ -32,7 +32,12 @@ class VRSBenchDataset(Dataset):
         self.data_path = data_path
         self.split = split
         self.task_type = task_type
-        self.image_dir = os.path.join(data_path, "images")
+        
+        # Check for Images_val / images directories
+        if os.path.exists(os.path.join(data_path, "Images_val")):
+            self.image_dir = os.path.join(data_path, "Images_val")
+        else:
+            self.image_dir = os.path.join(data_path, "images")
 
         # Default transforms
         if transform is not None:

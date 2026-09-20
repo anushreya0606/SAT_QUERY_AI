@@ -115,20 +115,29 @@ def download_vrsbench(output_dir: str):
     print("VRSBench (Visual Remote Sensing Benchmark)")
     print("=" * 60)
 
-    # Try HuggingFace
+    # Try HuggingFace snapshot_download or load_dataset
+    try:
+        from huggingface_hub import snapshot_download
+        print("  Downloading from HuggingFace (xiang709/VRSBench)...")
+        snapshot_download(
+            repo_id="xiang709/VRSBench",
+            repo_type="dataset",
+            local_dir=dataset_dir,
+            local_dir_use_symlinks=False,
+        )
+        print(f"  ✓ VRSBench downloaded successfully to {dataset_dir}")
+        return
+    except Exception as e:
+        print(f"  Note: snapshot_download encountered: {e}")
+
     try:
         from datasets import load_dataset
-
-        print("  Attempting HuggingFace download...")
-        dataset = load_dataset("lhrs/VRSBench", cache_dir=dataset_dir)
+        print("  Attempting load_dataset('xiang709/VRSBench')...")
+        dataset = load_dataset("xiang709/VRSBench", cache_dir=dataset_dir)
         print("  ✓ VRSBench downloaded from HuggingFace")
-
-        images_dir = os.path.join(dataset_dir, "images")
-        os.makedirs(images_dir, exist_ok=True)
-        print(f"  Dataset cached at: {dataset_dir}")
         return
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"  Note: load_dataset encountered: {e}")
 
     # Fallback instructions
     print("  Could not auto-download. Please download manually:")

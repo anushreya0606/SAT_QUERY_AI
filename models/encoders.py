@@ -97,12 +97,22 @@ class OpticalEncoder(BaseEncoder):
             transforms.Normalize(mean=_OPTICAL_MEAN, std=_OPTICAL_STD),
         ])
 
+    def _enhance_contrast(self, pil_image: Image.Image) -> Image.Image:
+        """Apply 2%-98% radiometric percentile stretching for optimal dynamic range."""
+        arr = np.array(pil_image, dtype=np.float32)
+        p2, p98 = np.percentile(arr, (2, 98))
+        if p98 > p2:
+            arr = np.clip((arr - p2) / (p98 - p2) * 255.0, 0, 255).astype(np.uint8)
+            return Image.fromarray(arr)
+        return pil_image
+
     def preprocess(
         self,
         image: Union[Image.Image, np.ndarray, torch.Tensor],
     ) -> torch.Tensor:
-        """Resize, to-tensor, and normalise optical image."""
+        """Resize, contrast-stretch, to-tensor, and normalise optical image."""
         pil_image = self._to_pil(image)
+        pil_image = self._enhance_contrast(pil_image)
         return self.transform(pil_image)
 
     def encode(
@@ -122,7 +132,7 @@ class SAREncoder(BaseEncoder):
 
     SAR-specific preprocessing:
       1. Convert linear amplitude → log (dB) scale if input appears linear.
-      2. Apply lee_filter-style speckle reduction (3×3 box-car approximation).
+      2. Apply adaptive Lee speckle filter preserving edges and radiometric textures.
       3. Clip to [-30, 0] dB range and normalise.
       4. Replicate single-channel (HH or HV) or stack dual-channel to 3 channels.
     """
@@ -145,17 +155,23 @@ class SAREncoder(BaseEncoder):
         arr = np.clip(arr, 1e-10, None)
         return 10.0 * np.log10(arr)
 
-    def _speckle_filter(self, arr: np.ndarray) -> np.ndarray:
+    def _speckle_filter(self, arr: np.ndarray, win_size: int = 5) -> np.ndarray:
         """
-        Box-car (mean) filter for speckle reduction.
-        For production use, replace with Lee or Refined Lee filter via scipy.
+        Lee adaptive filter for radar speckle suppression.
+        Preserves edges while removing speckle variance in homogeneous backscatter regions.
         """
         from scipy.ndimage import uniform_filter
         try:
-            return uniform_filter(arr, size=3).astype(np.float32)
-        except ImportError:
-            # Fallback: no filtering
-            return arr
+            local_mean = uniform_filter(arr, size=win_size)
+            local_sqr_mean = uniform_filter(arr ** 2, size=win_size)
+            local_var = np.maximum(local_sqr_mean - local_mean ** 2, 0)
+            noise_var = 0.05 * (local_mean ** 2)
+            weight = np.where(local_var > noise_var, (local_var - noise_var) / (local_var + 1e-8), 0.0)
+            weight = np.clip(weight, 0.0, 1.0)
+            filtered = local_mean + weight * (arr - local_mean)
+            return filtered.astype(np.float32)
+        except Exception:
+            return arr.astype(np.float32)
 
     def _normalise_db(self, arr: np.ndarray) -> np.ndarray:
         """Clip dB range and normalise to [0, 1]."""

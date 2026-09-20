@@ -278,9 +278,35 @@ class VRSBenchAdapter(Dataset):
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         item = self.samples[idx]
-        img_path = item.get("image_path", "")
         
-        if os.path.exists(img_path):
+        # Resolve prompt and target
+        prompt = item.get("prompt") or item.get("question", "")
+        target = item.get("target") if "target" in item else item.get("ground_truth", "")
+        
+        # Resolve task type
+        ttype = item.get("task_type")
+        if not ttype:
+            if self.task == "caption":
+                ttype = "vrsbench_caption"
+            elif self.task == "grounding":
+                ttype = "segmentation"
+            else:
+                ttype = "vqa_choice" if any(kw in prompt.lower() for kw in ["is there", "how many", "what color", "yes or no", "count"]) else "vqa_caption"
+                
+        # Resolve sample ID
+        sample_id = item.get("sample_id") or f"vrsbench_{self.task}_{self.split}_{item.get('question_id', idx)}"
+        
+        # Resolve image path
+        img_id = str(item.get("image_id", item.get("image", "")))
+        img_path = item.get("image_path", "")
+        if not img_path or not os.path.exists(img_path):
+            for candidate_dir in ["Images_val", "images", "Images_train"]:
+                p = os.path.join(self.data_root, candidate_dir, img_id)
+                if os.path.exists(p):
+                    img_path = p
+                    break
+        
+        if img_path and os.path.exists(img_path):
             img = Image.open(img_path).convert("RGB").resize(self.img_size)
             img_tensor = torch.from_numpy(np.array(img)).permute(2, 0, 1).float() / 255.0
         else:
@@ -294,10 +320,10 @@ class VRSBenchAdapter(Dataset):
             "wavelengths": wavelengths,
             "gsd": self.gsd,
             "sensor_domain": "vrsbench_optical",
-            "prompt": item["prompt"],
-            "target": item["target"],
-            "task_type": item["task_type"],
-            "sample_id": item["sample_id"],
+            "prompt": prompt,
+            "target": target,
+            "task_type": ttype,
+            "sample_id": sample_id,
         }
 
 
