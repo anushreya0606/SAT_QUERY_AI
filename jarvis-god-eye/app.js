@@ -1415,13 +1415,7 @@ class AntarikshAstra {
         }, 2400);
     }
 
-    setBackgroundImage(url) {
-        if (!this.dom.bg_image) return;
-        const img = new Image();
-        img.onload = () => {
-            this.dom.bg_image.style.backgroundImage = `url(${url})`;
-            this.dom.bg_image.classList.add('active');
-        };
+    setBackgroundImage(url) { if(this.dom.bg_image) this.dom.bg_image.style.backgroundImage = "none"; }
         img.src = url;
     }
 
