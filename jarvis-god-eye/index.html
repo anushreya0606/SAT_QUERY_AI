@@ -152,39 +152,17 @@
 
         <!-- RIGHT PANEL -->
         <div id="right-panel">
-            <div class="data-card">
-                <div class="card-header">
-                    <span class="card-icon material-symbols-outlined">cloud</span> WEATHER INTEL
-                    <button class="fav-btn" id="fav-btn" title="Add to favorites">☆</button>
-                </div>
+            <div class="data-card" style="border: 1px solid #00f0ff; background: rgba(4, 11, 20, 0.8);">
+                <div class="card-header"><span class="card-icon material-symbols-outlined">analytics</span> ISRO AUDIT & EXPORT</div>
                 <div class="card-body">
-                    <div class="weather-main">
-                        <span class="weather-temp" id="weather-temp">--°</span>
-                        <span class="weather-desc" id="weather-desc">--</span>
-                    </div>
-                    <div class="data-row"><span class="data-label">WIND</span><span class="data-value" id="weather-wind">--</span></div>
-                    <div class="data-row"><span class="data-label">HUMIDITY</span><span class="data-value" id="weather-humidity">--</span></div>
-                    <div class="data-row"><span class="data-label">VISIBILITY</span><span class="data-value" id="weather-vis">--</span></div>
-                </div>
-            </div>
-            <div class="data-card">
-                <div class="card-header"><span class="card-icon material-symbols-outlined">info</span> PLACE INTEL</div>
-                <div class="card-body">
-                    <div class="place-image-container" id="place-image-container">
-                        <img id="place-image" alt="Place">
-                    </div>
-                    <div class="place-name" id="place-name">NO TARGET</div>
-                    <div class="place-description" id="place-description">Search for a location to acquire intel...</div>
-                </div>
-            </div>
-            <div class="data-card">
-                <div class="card-header"><span class="card-icon material-symbols-outlined">location_on</span> NEARBY LANDMARKS</div>
-                <div class="card-body" id="attractions-list">
-                    <div class="attraction-placeholder">No landmarks detected</div>
+                    <p style="font-size: 11px; opacity: 0.8; margin-bottom: 15px; color: #fff;">Download the full execution trace, DOFA-VLM inference JSON, and coordinate targets for mission debriefing.</p>
+                    <button id="download-report-btn" style="width: 100%; background: rgba(0,240,255,0.1); border: 1px solid #00f0ff; color: #00f0ff; padding: 8px; border-radius: 4px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; transition: all 0.3s ease;">
+                        <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">download</span> EXPORT AUDIT TRACE
+                    </button>
                 </div>
             </div>
         </div>
-
+        
         <!-- BOTTOM PANEL — DRISHTI AI ASSISTANT -->
         <div id="bottom-panel">
             <div class="panel-header-bar" id="fav-header-bar" title="Click to expand / collapse Assistant">
@@ -196,7 +174,7 @@
                 <div id="chat-history" style="flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:10px; min-height:100px;">
                 </div>
                 <div style="display:flex; padding:8px; border-top:1px solid rgba(0,240,255,0.2); gap:8px;">
-                    <button id="upload-data-btn" title="Upload Satellite Data" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">attach_file</span></button>
+                    <button id="upload-data-btn" title="Upload Satellite Data" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">upload_file</span></button>
                     <button id="chat-voice-btn" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">mic</span></button>
                     <input type="text" id="chat-input" placeholder="Ask Drishti..." autocomplete="off" style="flex:1; background:transparent; border:1px solid rgba(0,240,255,0.3); color:#00f0ff; padding:6px 10px; border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:12px;">
                     <button id="chat-send-btn" style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.5); color:#00f0ff; cursor:pointer; border-radius:4px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;"><span class="material-symbols-outlined" style="font-size:16px">send</span></button>
