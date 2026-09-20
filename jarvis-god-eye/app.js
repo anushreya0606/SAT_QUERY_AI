@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   ANTARIKSH ASTRA — SPATIAL INTELLIGENCE CORE v2
+   SATQUERY AI — SPATIAL INTELLIGENCE CORE v2
    Three.js · Satellite Telemetry · Web Audio · Live Intelligence
    ═══════════════════════════════════════════════════════════════ */
 
@@ -76,7 +76,7 @@ const STRATEGIC_LOCATIONS = {
         alt: '160m',
         pop: '1.43B',
         bg: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1920&q=80',
-        desc: 'Subcontinental spatial surveillance sector. Headquarters of ISRO & Indian space telemetry defense grid (Antariksh Astra).',
+        desc: 'Subcontinental spatial surveillance sector. Headquarters of ISRO & Indian space telemetry defense grid (SatQuery AI).',
         landmarks: [
             { name: 'India Gate (New Delhi)', lat: 28.6129, lng: 77.2295 },
             { name: 'ISRO Antariksh Bhavan (Bengaluru)', lat: 13.0334, lng: 77.5640 },
@@ -334,9 +334,9 @@ class AstraAudio {
 const JarvisAudio = AstraAudio;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// ANTARIKSH ASTRA PROTOCOL CLASS
+// SATQUERY AI PROTOCOL CLASS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-class AntarikshAstra {
+class SatQueryAI {
     constructor() {
         this.audio = new AstraAudio();
 
@@ -494,10 +494,10 @@ class AntarikshAstra {
     // ── BOOT SEQUENCE (Cold Start) ───────────────────
     async bootSequence() {
         const messages = [
-            'INITIALIZING ANTARIKSH ASTRA SPATIAL MATRIX...',
+            'INITIALIZING SATQUERY AI SPATIAL MATRIX...',
             'ACQUIRING NRO/NGA SATELLITE CONSTELLATION...',
             'ESTABLISHING ENCRYPTED SAT-LINK [TOP SECRET]...',
-            'CALIBRATING ANTARIKSH ASTRA SENSOR SUITE...',
+            'CALIBRATING SATQUERY AI SENSOR SUITE...',
             'SYNCHRONIZING MGRS GEODETIC RECONNAISSANCE...',
             'DEPLOYING RECON OVERLAY & SCOPE VIGNETTE...',
             'ALL SYSTEMS OPERATIONAL ■ PROTOCOL ACTIVE',
@@ -515,7 +515,7 @@ class AntarikshAstra {
 
         await this.wait(400);
 
-        // Fade out boot screen, reveal Antariksh Astra HUD
+        // Fade out boot screen, reveal SatQuery AI HUD
         if (this.dom.boot_screen) {
             this.dom.boot_screen.classList.add('fade-out');
             setTimeout(() => {
@@ -529,7 +529,7 @@ class AntarikshAstra {
         if (this.dom.intel_hud) this.dom.intel_hud.classList.add('visible');
 
         this.audio.playLock();
-        this.typeIntelSummary('ANTARIKSH ASTRA PROTOCOL READY. SELECT SATELLITE OR SEARCH TARGET.');
+        this.typeIntelSummary('SATQUERY AI PROTOCOL READY. SELECT SATELLITE OR SEARCH TARGET.');
 
         // Default target: Paris
         setTimeout(() => {
@@ -1971,7 +1971,7 @@ class AntarikshAstra {
             return;
         }
         if (q.includes('who are you') || q.includes('what are you') || q.includes('intelligent') || q.includes('smart')) {
-            this.appendChatMsg("I am Drishti Spatial AI, developed for ISRO's Antariksh Astra matrix. I can analyze satellite telemetry, perform bi-temporal change detection, and fuse multi-sensor data.");
+            this.appendChatMsg("I am Drishti Spatial AI, developed for ISRO's SatQuery AI matrix. I can analyze satellite telemetry, perform bi-temporal change detection, and fuse multi-sensor data.");
             return;
         }
         if (q.includes('thank you') || q === 'thanks') {
@@ -2059,12 +2059,12 @@ class AntarikshAstra {
     }
 }
 
-const JarvisGodEye = AntarikshAstra;
+const JarvisGodEye = SatQueryAI;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // LAUNCH APPLICATION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 document.addEventListener('DOMContentLoaded', () => {
-    window.astraApp = new AntarikshAstra();
+    window.astraApp = new SatQueryAI();
     window.jarvisApp = window.astraApp;
 });
