@@ -25,6 +25,7 @@ env/
 # Project-specific
 .env
 .env.*
+pretrained_models/
 datasets_raw/
 datasets_processed/
 outputs/
