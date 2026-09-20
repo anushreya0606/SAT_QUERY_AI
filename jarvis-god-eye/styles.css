@@ -431,9 +431,32 @@ html, body {
 #left-panel {
     position: fixed; top: 80px; left: 16px; width: 250px; z-index: 15;
     opacity: 0; transform: translateX(-30px);
-    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+    transition: opacity 0.8s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 #hud.visible #left-panel { opacity: 1; transform: translateX(0); }
+#hud.visible #left-panel.collapsed { transform: translateX(calc(-100% - 16px)); }
+
+.panel-toggle-btn {
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 40px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    color: #00f0ff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s;
+}
+.panel-toggle-btn:hover { background: rgba(0, 240, 255, 0.2); }
+
 
 /* ── RADAR ── */
 .radar-container { display: flex; justify-content: center; padding: 16px; }
