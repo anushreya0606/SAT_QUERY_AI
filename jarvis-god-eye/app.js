@@ -2011,7 +2011,7 @@ class AntarikshAstra {
                 setTimeout(() => {
                     this.appendChatMsg(data.result);
                     if (data.result.includes("LOSS DETECTED") || data.result.includes("CONSTRUCTION IDENTIFIED")) {
-                        this.showImagePopup();
+                        this.showImagePopup(data.bbox);
                     }
                     this.dom.system_status_text.textContent = 'TASK COMPLETE';
                 }, 2000);
@@ -2033,7 +2033,7 @@ class AntarikshAstra {
             }, 1500);
             setTimeout(() => {
                 this.appendChatMsg("Result: 2.4 sq km forest loss detected. Confidence: 0.94.");
-                this.showImagePopup();
+                this.showImagePopup(data.bbox);
                 this.dom.system_status_text.textContent = 'TASK COMPLETE';
                 this.appendTraceLog({ step_id: "DEF_03", module: "output_formatter", prediction: "2.4 sq km loss", confidence: 0.94 });
             }, 4500);
@@ -2046,7 +2046,7 @@ class AntarikshAstra {
             setTimeout(() => { this.appendChatMsg("Cross-referencing Cartosat optical with RISAT SAR backscatter..."); }, 1500);
             setTimeout(() => {
                 this.appendChatMsg("Result: Unauthorized construction identified. Confidence: 0.88.");
-                this.showImagePopup();
+                this.showImagePopup(data.bbox);
                 this.dom.system_status_text.textContent = 'TASK COMPLETE';
                 this.appendTraceLog({ step_id: "SAR_02", module: "inference", prediction: "Unauthorized construction", confidence: 0.88 });
             }, 4500);

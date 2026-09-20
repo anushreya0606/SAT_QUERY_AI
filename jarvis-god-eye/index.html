@@ -126,6 +126,8 @@
             <button class="sensor-btn" data-mode="crt" title="CRT Retro">CRT</button>
             <button class="sensor-btn" data-mode="nvg" title="Night Vision">NVG</button>
             <button class="sensor-btn" data-mode="flir" title="Thermal FLIR">FLR</button>
+            <button class="sensor-btn" id="upload-data-btn" title="Upload GeoTIFF" style="background:rgba(255, 107, 0, 0.2); color:#ff6b00; border-color:#ff6b00;">UPL</button>
+            <input type="file" id="dataset-upload" accept=".tif,.tiff,.jpg,.png" multiple style="display:none;">
         </div>
 
         <!-- LEFT PANEL -->
@@ -270,7 +272,10 @@
             </div>
             <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
                 <span style="color:#fff; margin-bottom:8px; font-size:11px; letter-spacing:1px;">T1 - CURRENT (ANALYZED)</span>
-                <img id="popup-img-2" src="https://placehold.co/350x250/040B14/FF6B00?text=CHANGE+DETECTED+T1" style="width:100%; border:1px solid rgba(0,240,255,0.4); border-radius:4px;" alt="Current Year">
+                <div style="position:relative; width:100%;">
+                    <img id="popup-img-2" src="https://placehold.co/350x250/040B14/FF6B00?text=CHANGE+DETECTED+T1" style="width:100%; border:1px solid rgba(0,240,255,0.4); border-radius:4px;" alt="Current Year">
+                    <div id="bbox-overlay" style="display:none; position:absolute; border:2px solid #ff0044; background:rgba(255,0,68,0.2); pointer-events:none;"></div>
+                </div>
             </div>
         </div>
         <button id="close-popup" style="display:block; margin:0 15px 15px 15px; padding:8px; width:calc(100% - 30px); background:rgba(0,240,255,0.1); border:1px solid #00f0ff; color:#00f0ff; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:12px;">DISMISS</button>
