@@ -567,15 +567,15 @@ class SatQueryAI {
         }
 
         // Lighting
-        this.ambientLight = new THREE.AmbientLight(0x334466, 0.7);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
         this.scene.add(this.ambientLight);
 
-        this.sunLight = new THREE.DirectionalLight(0xffffff, 2.4);
-        this.sunLight.position.set(40, 20, 30);
-        this.scene.add(this.sunLight);
+        this.sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        this.sunLight.position.set(0, 0, 50);
+        this.camera.add(this.sunLight);
+        this.scene.add(this.camera);
 
         this.fillLight = new THREE.DirectionalLight(0x00d4ff, 0.5);
-        this.fillLight.position.set(-30, -10, -20);
         this.scene.add(this.fillLight);
 
         this.rimLight = new THREE.PointLight(0x00d4ff, 0.8, 60);
