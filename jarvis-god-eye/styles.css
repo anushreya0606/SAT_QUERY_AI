@@ -132,14 +132,14 @@ html, body {
     opacity: 0; transition: opacity 2s ease;
     pointer-events: none;
 }
-#bg-image.active { opacity: 0.18; }
+#bg-image.active { opacity: 0.6; filter: brightness(1.2); }
 #bg-image::before {
     content: ''; position: absolute; inset: 0;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.012) 2px, rgba(0, 212, 255, 0.012) 4px);
 }
 #bg-image::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 10, 15, 0.88) 100%);
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 10, 15, 0.4) 100%);
 }
 
 /* ═══════════════════════════════════════
