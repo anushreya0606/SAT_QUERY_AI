@@ -1420,13 +1420,12 @@ class SatQueryAI {
     }
 
     setBackgroundImage(url) {
-        if (!this.dom.bg_image) return;
-        const img = new Image();
-        img.onload = () => {
-            this.dom.bg_image.style.backgroundImage = `url(${url})`;
-            this.dom.bg_image.classList.add('active');
-        };
-        img.src = url;
+        // Disabled background photos for a cleaner 3D globe ISRO aesthetic
+        if (this.dom.bg_image) {
+            this.dom.bg_image.classList.remove('active');
+            this.dom.bg_image.style.backgroundImage = 'none';
+        }
+        return;
     }
 
     renderLandmarks(landmarks) {
