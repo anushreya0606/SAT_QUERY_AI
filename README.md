@@ -1,41 +1,35 @@
-# SatQuery AI: Drishti Spatial Intelligence (SIH 2026 - PS 26167)
+# 🛰️ ANTARIKSH ASTRA — Spatial Intelligence Protocol
+### SIH 2026 | Problem Statement 26167 | ISRO / Space Applications Centre (SAC)
 
-**Problem Statement:** 26167 (ISRO/SAC)
-**Title:** SatQuery AI: An Interactive Vision-Language Assistant for Multimodal Remote Sensing Image Analysis through Text Queries
-**Team Name:** Antariksh Astra
+> **"An Agentic Vision-Language Platform for Multi-Sensor Satellite Image Analysis"**
+
+🔗 **Live Demo:** [sat-query-ai-zeta.vercel.app](https://sat-query-ai-zeta.vercel.app)
 
 ---
 
-## 🌍 Overview
+## 🌍 What is Antariksh Astra?
 
-**Drishti Spatial AI** is a fully interactive, multimodal Vision-Language Assistant built for the **Indian Space Research Organisation (ISRO)** and **Space Applications Centre (SAC)**. It replaces complex GIS software with an intuitive, cinematic 3D globe interface powered by an agentic multimodal reasoning pipeline.
+**Antariksh Astra** (powered by **Drishti Spatial AI**) is a fully agentic satellite intelligence platform built for ISRO/SAC. It replaces complex GIS tools with a natural language interface — operators simply type or speak a query, and the system automatically:
 
-Our solution democratizes satellite intelligence, allowing non-experts, disaster response teams, and policymakers to query multi-spectral and SAR satellite constellations entirely through natural text and voice commands.
-
-![Drishti Spatial AI Interface](https://raw.githubusercontent.com/anushreya0606/SAT_QUERY_AI/main/jarvis-god-eye/assets/preview.png) *(Preview of the cinematic God-Eye UI)*
+1. Reasons over multi-sensor satellite data (Cartosat-2S optical + RISAT-1A SAR)
+2. Generates a strict JSON execution trace (for ISRO audit compliance)
+3. Displays bi-temporal change analysis on a live 3D globe
+4. Allows upload of custom GeoTIFF satellite imagery for on-the-fly analysis
 
 ---
 
 ## ✨ Key Features
 
-### 1. Cinematic 3D "God-Eye" Globe Frontend
-- **Interactive UI:** Built with Three.js, offering a military-grade, futuristic targeting interface.
-- **Voice & Text Sandbox:** A persistent "Drishti Spatial AI" chat panel that supports text-to-speech (TTS) and speech-to-text.
-- **Auto-Targeting:** The globe automatically flies to and zooms in on targets recognized by the AI or Nominatim Geocoding API.
-- **Bi-Temporal Image Popups:** Displays "Before/After" satellite imagery overlays dynamically when analyzing changes.
-
-### 2. Intelligent Agentic Pipeline
-- **Conversational Intelligence:** Answers natural language queries, greets users based on system time, and handles conversational fallbacks.
-- **Automated Workflow:** Translates complex queries (e.g., "Show me deforestation in Dehradun") into spatial coordinates, triggers the pipeline, and speaks the results.
-
-### 3. FastAPI Agentic Backend
-- **Python-powered Router:** A FastAPI server (astapi_server.py) acts as the brain, simulating VLM inference and returning geocodes, confidence scores, and strict execution traces.
-- **SAR & Optical Fusion:** Built to cross-reference Cartosat optical with RISAT SAR backscatter.
-- **Change Detection:** Built-in multimodal reasoning pipelines to detect urban encroachment, deforestation, and natural disasters.
-
-### 4. ISRO Execution Trace Audit
-- **Strict JSON Tracing:** A live "EXECUTION TRACE" panel renders real-time JSON logs showing step_id, module, and  ction.
-- **Transparency:** Demonstrates exactly how the VLM and schema validators are reasoning through spatial data, fulfilling ISRO's requirement for reproducible auditing.
+| Feature | Description |
+|---|---|
+| 🤖 **Agentic Chat (Drishti)** | Natural language queries → spatial analysis. Ask *"Show me deforestation"* or *"SAR analysis"* |
+| 🌐 **Live 3D Globe** | Three.js-powered globe that flies to any location worldwide |
+| 📡 **DOFA-VLM Model** | Sensor-agnostic Vision-Language encoder for Sentinel-2, Cartosat-2S, RISAT-1A SAR |
+| 🔍 **Bi-Temporal Analysis** | Before/After satellite image comparison with AI-generated red bounding boxes |
+| 📜 **Execution Trace** | Live JSON audit log of every AI step — ISRO schema-compliant |
+| 📎 **Satellite Data Upload** | Upload any GeoTIFF/image file to run custom analysis |
+| 💾 **Export Audit Report** | One-click download of the full AI execution trace for mission debriefing |
+| 🎤 **Voice Commands** | Web Speech API integration for hands-free operation |
 
 ---
 
@@ -43,90 +37,128 @@ Our solution democratizes satellite intelligence, allowing non-experts, disaster
 
 ```mermaid
 graph TD
-    classDef primary fill:#2C3E50,stroke:#3498DB,stroke-width:2px,color:#fff
-    classDef secondary fill:#34495E,stroke:#2ECC71,stroke-width:2px,color:#fff
-    classDef external fill:#7F8C8D,stroke:#BDC3C7,stroke-width:2px,color:#fff
-    
-    User(("🧑‍💻 User")):::primary
-    
-    subgraph "Frontend (Drishti Spatial AI - Three.js)"
-        UI["🖥️ Cinematic 3D God-Eye Globe"]:::secondary
-        Voice["🎤 Web Speech API"]:::secondary
-        Chat["💬 Text Sandbox & Parser"]:::secondary
-    end
-    
-    subgraph "Backend (FastAPI Agentic Pipeline)"
-        API["⚡ FastAPI Router"]:::primary
-        Agent["🧠 Agentic Reasoning Engine"]:::primary
-        VLM["🛰️ Vision-Language Model"]:::primary
-        Audit["📜 JSON Execution Trace"]:::primary
-    end
-    
-    subgraph "External/Data Sources"
-        GeoAPI["🌍 Nominatim Geocoding API"]:::external
-        SatData["📡 Cartosat (Optical) & RISAT (SAR)"]:::external
-    end
-    
-    User -->|Voice/Text| Voice
-    User -->|Types Query| Chat
-    Voice --> Chat
-    Chat -->|Updates View| UI
-    Chat -->|Fetch Coordinates| GeoAPI
-    Chat -->|Complex Spatial Queries| API
-    
-    API --> Agent
-    Agent <--> VLM
-    VLM <--> SatData
-    Agent --> Audit
-    
-    Audit -->|Execution Steps| API
-    API -->|Results & Bi-Temporal Images| Chat
+    User["🧑‍💻 Operator"] -->|Voice / Text Query| Drishti["💬 Drishti Spatial AI Chat"]
+    Drishti -->|Agentic Intent| FastAPI["⚡ FastAPI Backend\nfastapi_server.py"]
+    FastAPI -->|Structured Response| Globe["🌐 3D Globe\nThree.js"]
+    FastAPI -->|JSON Trace| Trace["📜 Execution Trace\nPanel"]
+    Globe -->|Bi-Temporal Popup| Analysis["🖼️ Change Detection\nBI-TEMPORAL ANALYSIS"]
+    FastAPI -->|Inference Call| DOFA["🧠 DOFA-VLM Engine\ndofa_core/"]
+    DOFA -->|Pretrained Weights| Model["⚙️ model_weights.pt\n556MB PyTorch"]
+    DOFA -->|Sensor Fusion| Sensors["📡 Cartosat-2S Optical\n+ RISAT-1A SAR"]
 ```
 
-### Frontend (/jarvis-god-eye)
-- **HTML5/CSS3:** Custom HUD with JetBrains Mono and Orbitron fonts.
-- **Vanilla JS + Three.js:** 3D globe rendering, atmospheric scattering, and smooth camera flying.
-- **Web Speech API:** Native Text-to-Speech (TTS) and Speech Recognition.
-- **Nominatim API:** Live geocoding for unrecognized generic queries (e.g., "India", "USA").
+---
 
-### Backend (astapi_server.py)
-- **FastAPI:** High-performance async Python backend running on port 8000.
-- **Agentic Fallback:** Dynamically processes textual intent and routes instructions to the frontend's spatial modules.
+## 📁 Project Structure
+
+```
+SAT_QUERY_AI/
+├── jarvis-god-eye/          ← Frontend (Antariksh Astra UI)
+│   ├── index.html           ← Main HUD layout
+│   ├── app.js               ← Drishti AI logic, globe, agentic pipeline
+│   └── styles.css           ← Cinematic HUD styling
+│
+├── dofa_core/               ← DOFA-VLM Core Architecture (Team-built)
+│   ├── models/
+│   │   ├── dofa_vlm.py      ← Main Vision-Language Model
+│   │   └── dofa_encoder.py  ← Sensor-agnostic spectral encoder
+│   ├── data/                ← Dataset adapters (Sentinel-2, Cartosat, RISAT)
+│   └── trace_schema.py      ← ISRO audit execution trace schema
+│
+├── models/isro_dofa_vlm/    ← Pretrained model inference
+│   ├── inference.py         ← Run multi-sensor benchmark tests
+│   ├── load_model.py        ← Model weight loader
+│   ├── config.json          ← Architecture config
+│   └── model_weights.pt     ← [Local only – 556MB, gitignored]
+│
+├── fastapi_server.py        ← Agentic FastAPI backend (port 8000)
+└── requirements.txt         ← Python dependencies
+```
 
 ---
 
-## 🚀 Quickstart Guide (Local Presentation)
+## 🚀 Quickstart (Local Presentation)
 
-To run the solution locally for the presentation:
-
-### 1. Start the Agentic Backend
-Open a terminal and start the Python FastAPI server:
-`ash
-# Ensure FastAPI and Uvicorn are installed
-pip install fastapi uvicorn pydantic
-
-# Run the server
+### Step 1 — Start the AI Backend
+```bash
+pip install fastapi uvicorn pydantic torch numpy
 python fastapi_server.py
-`
-*The server will start on http://localhost:8000.*
+# Runs on http://localhost:8000
+```
 
-### 2. Start the 3D Frontend
-Open a second terminal, navigate to the frontend directory, and start a local HTTP server:
-`ash
+### Step 2 — Start the Frontend
+```bash
 cd jarvis-god-eye
 python -m http.server 3000
-`
+# Open http://localhost:3000
+```
 
-### 3. Access the Dashboard
-- Open your browser and navigate to: http://localhost:3000
-- Click **"INITIALIZE UPLINK"** to trigger the boot sequence.
-- Wait for the **"Drishti Spatial AI"** voice greeting.
-- Click the bottom panel to expand the chat and ask:
-  - *"Show me deforestation"*
-  - *"Analyze SAR fusion"*
-  - *"India"*
+### Step 3 — Run the DOFA-VLM Model
+```bash
+python models/isro_dofa_vlm/inference.py
+# Tests inference on Sentinel-2, Cartosat-2S, RISAT-1A SAR, BigEarthNet, VRSBench
+```
+
+### Step 4 — Demo Queries
+In the **Drishti chat**, type:
+- `deforestation` → Flies to Dehradun, shows NDVI change detection
+- `sar analysis` → Flies to New Delhi, shows Cartosat-RISAT fusion
+- Any location name → Globe flies to that target
 
 ---
 
-## 🛡️ License
-Built for the Smart India Hackathon 2026. Codebase is restricted to evaluating jury members.
+## 🤖 Model Inference Results (Verified)
+
+```
+>>> PRETRAINED ISRO DOFA-VLM INFERENCE RUNNER
+
+[Sentinel-2 RGB (10m GSD)]
+  Q: "Are there residential buildings and roads?"
+  A: "yes"
+
+[Cartosat-2S Optical (0.65m GSD)]
+  Q: "Identify commercial infrastructure and roads"
+  A: "yes"
+
+[RISAT-1A SAR C-Band (1m GSD)]
+  Q: "Does radar backscatter suggest flood inundation?"
+  A: "yes"
+
+[BigEarthNet 12-Band Multispectral]
+  Q: "Classify Corine Land Cover surface types"
+  A: "Inland waters"
+
+[VRSBench / GeoChat]
+  Q: "Describe the terrain, land use, and complexes"
+  A: "Overhead satellite image showcasing an urban transportation
+      corridor, commercial structures, and residential areas."
+```
+
+---
+
+## 🛡️ Compliance & Auditability
+
+Per ISRO/SAC requirements, every inference step is logged as a **machine-readable JSON execution trace**:
+
+```json
+{
+  "step_id": "BACKEND_EXEC",
+  "module": "DOFA_VLM_ENCODER",
+  "sensor": "sensor-agnostic",
+  "outputs": { "intent": "deforestation", "confidence": 0.94 },
+  "timestamp": "2026-09-20T10:30:00Z"
+}
+```
+
+The **EXPORT AUDIT TRACE** button generates a downloadable mission debrief report.
+
+---
+
+## 👩‍💻 Built For
+
+**Smart India Hackathon 2026**  
+Problem Statement: **PS-26167**  
+Organization: **ISRO / Space Applications Centre (SAC)**  
+Category: Satellite Image Analysis & Vision-Language AI
+
+*Codebase restricted to evaluating jury members only.*
