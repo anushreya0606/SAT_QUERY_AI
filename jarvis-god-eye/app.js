@@ -1988,7 +1988,7 @@ class AntarikshAstra {
         // 2. Connect to the Real Python Backend!
         try {
             this.setSystemStatus('QUERYING AGENTIC BACKEND...');
-            const response = await fetch('https://drishti-backend-owtx.onrender.com/api/query', {
+            const response = await fetch('http://localhost:8000/api/query', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: query })
