@@ -26,6 +26,7 @@ env/
 .env
 .env.*
 pretrained_models/
+pretrained_models.zip
 datasets_raw/
 datasets_processed/
 outputs/
