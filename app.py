@@ -30,7 +30,10 @@ from datetime import datetime
 from typing import Optional, Tuple
 
 import pandas as pd
-import pydeck as pdk
+try:
+    import pydeck as pdk
+except ImportError:
+    pdk = None
 from PIL import Image, ImageDraw, ImageFilter
 
 # Add project root to sys.path
@@ -494,18 +497,21 @@ if mode == "Single Image Analysis":
                     m_col4.metric("GPS Coordinates", f"{target_lat:.4f}° N, {target_lon:.4f}° E")
 
                     df_loc = pd.DataFrame([{"latitude": target_lat, "longitude": target_lon, "target": prompt_input}])
-                    st.pydeck_chart(pdk.Deck(
-                        map_style="mapbox://styles/mapbox/satellite-v9",
-                        initial_view_state=pdk.ViewState(latitude=target_lat, longitude=target_lon, zoom=15, pitch=45),
-                        layers=[
-                            pdk.Layer("ScatterplotLayer", data=df_loc,
-                                      get_position="[longitude, latitude]",
-                                      get_color="[255, 40, 40, 200]",
-                                      get_radius=max(15, int(real_w_m / 2)),
-                                      pickable=True),
-                        ],
-                        tooltip={"text": "Target: {target}\nLat: {latitude}, Lon: {longitude}"}
-                    ))
+                    if pdk is not None:
+                        st.pydeck_chart(pdk.Deck(
+                            map_style="mapbox://styles/mapbox/satellite-v9",
+                            initial_view_state=pdk.ViewState(latitude=target_lat, longitude=target_lon, zoom=15, pitch=45),
+                            layers=[
+                                pdk.Layer("ScatterplotLayer", data=df_loc,
+                                          get_position="[longitude, latitude]",
+                                          get_color="[255, 40, 40, 200]",
+                                          get_radius=max(15, int(real_w_m / 2)),
+                                          pickable=True),
+                            ],
+                            tooltip={"text": "Target: {target}\nLat: {latitude}, Lon: {longitude}"}
+                        ))
+                    else:
+                        st.map(df_loc)
 
                 else:
                     st.markdown(f"""

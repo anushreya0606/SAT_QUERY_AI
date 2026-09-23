@@ -18,7 +18,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from pretrained_models.isro_dofa_vlm.load_model import load_pretrained_dofa_vlm
+from bipanshu_work.models.dofa_vlm import DOFA_VLM
 
 def calculate_ndvi(nir_band: np.ndarray, red_band: np.ndarray) -> np.ndarray:
     """Calculates Normalized Difference Vegetation Index: (NIR - Red) / (NIR + Red)"""
@@ -35,9 +35,10 @@ def run_dehradun_deforestation_analysis():
     print("[*] Observation Window:  Temporal Baseline 2021 (T1) -> Current Observation (T2)")
     print("-" * 80)
 
-    # 1. Load Pretrained DOFA-VLM Model
-    print("\n[1/4] Initializing Pretrained DOFA-VLM Vision-Language Model...")
-    model = load_pretrained_dofa_vlm()
+    # 1. Load DOFA-VLM Model
+    print("\n[1/4] Initializing DOFA-VLM Vision-Language Model...")
+    model = DOFA_VLM()
+    model.eval()
 
     # 2. Simulate / Load Bi-temporal Multispectral Observations
     # Channels: [NIR (B08: 0.842um), Red (B04: 0.665um), Green (B03: 0.560um)]
