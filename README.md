@@ -1,5 +1,5 @@
 # 🛰️ ANTARIKSH ASTRA — Spatial Intelligence Protocol
-### SIH 2026 | Problem Statement 26167 | ISRO / Space Applications Centre (SAC)
+### SIH 2026 | Problem Statement 26167 | ISRO / Space Applications Centre (SAC) | Team T.ENDGAME
 
 > **"An Agentic Vision-Language Platform for Multi-Sensor Satellite Image Analysis"**
 
@@ -159,6 +159,6 @@ The **EXPORT AUDIT TRACE** button generates a downloadable mission debrief repor
 **Smart India Hackathon 2026**  
 Problem Statement: **PS-26167**  
 Organization: **ISRO / Space Applications Centre (SAC)**  
-Category: Satellite Image Analysis & Vision-Language AI
+Team: **T.ENDGAME** (ID: 176005) | **Graphic Era University, Dehradun**
 
 *Codebase restricted to evaluating jury members only.*
